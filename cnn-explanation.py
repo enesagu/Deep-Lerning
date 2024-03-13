@@ -179,22 +179,64 @@ for epoch in range(num_epochs):
 
         # back
         loss.backward()
+
+        # update weights
         optimizer.step()
 
-
+    # test
     correct = 0
     total = 0
 
-    with torch.no_grad():
+    with torch.no_grad(): 
         for data in testloader:
             images, labels = data
             images = images.view(batch_size,1,64,32)
+            images = images.float()
 
+            #gpu
+            if use_gpu:
+                if torch.cuda.is_available():
+                    inputs, labels = inputs.to(device), labels.to(device)
 
+            output = net(images)
 
+            _, predicted = torch.max(output.data,1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    acc1 = 100*correct/total
+    print("accuracy test: ",acc1)
+    test_acc.append(acc1)
+
+    # train
+    correct = 0
+    total = 0
+
+    with torch.no_grad(): 
+        for data in trainloader:
+            images, labels = data
+            images = images.view(batch_size,1,64,32)
+            images = images.float()
+
+            #gpu
+            if use_gpu:
+                if torch.cuda.is_available():
+                    inputs, labels = inputs.to(device), labels.to(device)
+
+            output = net(images)
+
+            _, predicted = torch.max(output.data,1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    acc2 = 100*correct/total
+    print("accuracy train: ",acc1)
+    train_acc.append(acc1)
 # train
 
 
+
+print("train is done.")
 
 
 
