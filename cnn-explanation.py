@@ -12,9 +12,11 @@ import numpy as np
 import os
 import time
 
-
+#%% Device config
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Device ",device)
+
+#%% Dataset
 
 def read_images(path, num_img):
     array = np.zeros([num_img,64*32])
@@ -81,7 +83,7 @@ y_train = torch.cat((y_train_negative_tensor,y_train_positive_tensor),0)
 print(x_train)
 print(y_train)
 
-
+# concat test
 x_test = torch.cat((x_test_negative_tensor,x_test_positive_tensor),0)
 y_test = torch.cat((y_test_negative_tensor,y_test_positive_tensor),0)
 
