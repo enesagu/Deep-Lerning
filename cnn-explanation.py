@@ -116,15 +116,15 @@ class Net(nn.Module):
 
 
 
-        def forward(self,x):
-            x = self.pool(F.relu((self.conv1(x))))
-            x = self.pool(F.relu(self.conv2(x)))
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, 16 * 13 * 5)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
 
-            x = x.view(-1,16*13*5)
-            x = F.relu(self.fc1(x))
-            x = F.relu(self.fc2(x))
-            x = self.fc3(x)
-            return x
 
 
 
@@ -140,7 +140,7 @@ net = Net()
 
 print(" criterion")
 #%%
-criterion = nn.CrossEntropyLoss
+criterion = nn.CrossEntropyLoss(reduction='mean')
 
 import torch.optim as optim
 optimizer = optim.SGD(net.parameters(),lr=learning_rate, momentum=0.8)
@@ -190,7 +190,7 @@ for epoch in range(num_epochs):
     with torch.no_grad(): 
         for data in testloader:
             images, labels = data
-            images = images.view(batch_size,1,64,32)
+            images = images.view(-1, 1, 64, 32)
             images = images.float()
 
             #gpu
