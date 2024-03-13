@@ -1,6 +1,6 @@
 #%%
 !pip install torch
-!pip imstall pillow
+!pip install pillow
 !pip install matplotlib
 !pip install numpy
 import torch
