@@ -87,8 +87,9 @@ y_test = torch.cat((y_test_negative_tensor,y_test_positive_tensor),0)
 
 print(x_test)
 print(y_test)
+print("read section")
 #%% deneme
-plt.imshow(x_train[42001,:].reshape(64,32),cmap="gray")
+plt.imshow(x_train[41999,:].reshape(64,32),cmap="gray")
 
 
 #%% cnn
@@ -104,15 +105,15 @@ learning_rate = 0.00001
 class Net(nn.Module):
     
     def __init__(self):
-        super(Net.self).__init__()
-
+        super(Net, self).__init__()  
         self.conv1 = nn.Conv2d(1,10,5)
         self.pool = nn.MaxPool2d(2,2)
         self.conv2 = nn.Conv2d(10,16,5)
 
-        self.fc1 = nn.Linear(16*13,*5,520)
-        self.fc2 = nn.Linear(520*130)
+        self.fc1 = nn.Linear(16*13*5, 520) 
+        self.fc2 = nn.Linear(520, 130) 
         self.fc3 = nn.Linear(130, num_classes)
+
 
 
         def forward(self,x):
@@ -128,15 +129,16 @@ class Net(nn.Module):
 
 
 train = torch.utils.data.TensorDataset(x_train, y_train)
-trainloader = torch.utils.data.Dataloader(train,batch_size = batch_size, shuffle = True)
+trainloader = torch.utils.data.DataLoader(train,batch_size = batch_size, shuffle = True)
  
 
 test = torch.utils.data.TensorDataset(x_test, y_test)
-testloader = torch.utils.data.Dataloader(test, batch_size = batch_size, shuffle = True)
+testloader = torch.utils.data.DataLoader(test, batch_size = batch_size, shuffle = True)
  
 
 net = Net()
 
+print(" criterion")
 #%%
 criterion = nn.CrossEntropyLoss
 
