@@ -26,16 +26,16 @@ print(type(vgg))
 vgg_layer_list = vgg.layers
 print(vgg_layer_list)
 
-model = Sequential()
-for i in range(len(vgg_layer_list)-1):
-    model.add(vgg_layer_list[i])
+model = Sequential()   ### 
+for i in range(len(vgg_layer_list)-1):   ### we are cuting last layer because vgg last layer has 1000 classification param and we don't want in this project
+    model.add(vgg_layer_list[i])          ### adding layer our model
 
-print(model.summary())
+print(model.summary())      #### now we can see what we have in our final model 
 
-for layers in model.layers:
+for layers in model.layers:     ### edit all train for trainable false
     layers.trainable = False
 
-model.add(Dense(numberOfClass, activation="softmax"))
+model.add(Dense(numberOfClass, activation="softmax"))      ## output layers
 
 print(model.summary())
 
@@ -88,16 +88,6 @@ plt.plot(n["acc"],label = "training acc")
 plt.plot(n["val_acc"],label = "validation acc")
 plt.legend()
 plt.show()
-
-
-
-
-
-
-
-
-
-
 
 
 
